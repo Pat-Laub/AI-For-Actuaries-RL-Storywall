@@ -65,25 +65,23 @@ class CustomRewardWrapper(gymnasium.RewardWrapper):
 
     def __init__(self, env):
         super().__init__(env)
-        # Optionally, define the reward range if it changes
         self.reward_storage = []
-        self.reward_range = (-float('inf'), float('inf'))
 
     def step(self, action):
         observation, reward, terminated, truncated, info = self.env.step(
             action)
-        reward, terminated = self.reward(reward, terminated)
-        return observation, reward, terminated, truncated, info
+        return observation, self.reward(reward), terminated, truncated, info
 
-    def reward(self, reward, terminated):
-        # Modify the reward as needed
+    def reward(self, reward):
+        # Append reward to current storage
         self.reward_storage.append(reward)
-        return reward, terminated
+        return reward
 
     def get_rewards(self):
         return self.reward_storage
 
     def reset_reward_logs(self):
+        # Reset current storage for new episode
         self.reward_storage = []
 
 
@@ -99,6 +97,8 @@ class RewardLogCallback(sb3_common.callbacks.BaseCallback):
 
     def _on_step(self):
         reward_storage = []
+        # Gets the CustomRewardWrapper layer of each environment in vectorised environment
+        # Saves its current reward logs and resets them
         for env in self.parent.eval_env.get_attr("env"):
             reward_env = sb3_common.env_util.unwrap_wrapper(
                 env, CustomRewardWrapper)
