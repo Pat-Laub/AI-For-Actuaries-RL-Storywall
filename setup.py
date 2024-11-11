@@ -17,6 +17,9 @@ SAVE_FREQ = 500_000
 # How often to evaluate the model - same note as above
 EVAL_FREQ = 1_000_000
 
+# Discount rate for rewards received
+DISCOUNT_RATE = 0.99
+
 
 # ---------------------------- You shouldn't need to change anything below here ----------------------------
 
@@ -44,7 +47,8 @@ ALGO_SPECIFIC_PARAMS = {
         "vf_coef": 0.5,
         "ent_coef": 0.01,
         "n_steps": 256,
-        "clip_range_vf": None
+        "clip_range_vf": None,
+        "gamma": DISCOUNT_RATE
     },
     "DQN": {
         "buffer_size": 100_000,
@@ -57,7 +61,7 @@ ALGO_SPECIFIC_PARAMS = {
         "exploration_fraction": 0.1,
         "exploration_final_eps": 0.01,
         "optimize_memory_usage": False,
-        "gamma": 0.99,
+        "gamma": DISCOUNT_RATE,
 
     }
 }
