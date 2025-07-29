@@ -1,4 +1,4 @@
-# ACTL3143 Storywall
+# Reinforcement Learning Storywall
 
 Run `pip install -r requirements.txt` so it installs the packages you need to run the code. I would recommend doing this in a [virtual environment](https://docs.python.org/3/library/venv.html) as some of the packages have recently been updated which could cause some annoying version conflicts with any other packages you may have. Additionally, this set of requirements was created using Python 3.11.6, I haven't tested it fully with Python 3.12, but from what I have tried it seemed to work.
 
